@@ -29,7 +29,7 @@ public class SnakeAI
             else if ( choice == 2 )
             {
                 System.out.println("test ai");
-                System.out.println("not available");
+                window = new TestSnakeWindow();
             }
             else if ( choice == 3 )
             {
