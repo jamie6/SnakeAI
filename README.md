@@ -16,10 +16,11 @@ Enter into command prompt:
 the game snake. 
 
 2. Test Snake A.I.
---This option is not available yet and will be used to test previously saved neural networks.
+--This option allows the user to test their previously saved neural networks. Just press Open button, click on neural network txt file
+and press start button.
 
 3. Play Snake
---Allows user to play the game Snake.
+--Allows user to play the game Snake. Press start button to play.
 
 4. Exit
 --Terminates the application.
