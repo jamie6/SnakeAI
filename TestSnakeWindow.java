@@ -53,6 +53,7 @@ public class TestSnakeWindow implements Window
     {
 	if ( !isPaused )
 	{
+            sc[0].snake.stepsTaken = 0;
             sc[0].update();
 	    if ( sc[0].isGameOver() )  gameover();
 	}
