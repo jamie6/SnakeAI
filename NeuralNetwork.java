@@ -107,13 +107,15 @@ public class NeuralNetwork
 	this.fileName = fileName;
 	try
 	{
-	    java.io.File inputFile = new java.io.File(fileName + ".txt");
+	    java.io.File inputFile = new java.io.File(fileName);// + ".txt");
 	    java.util.Scanner in = new java.util.Scanner(inputFile);
 	    
 	    inputNodes = in.nextInt();
 	    hiddenNodes = in.nextInt();
 	    outputNodes = in.nextInt();
 	    
+            in.nextLine();
+            
 	    java.util.LinkedList<Matrix> tempLL = new java.util.LinkedList<>();
 	    java.util.Scanner tempLine;
 	    for ( ; in.hasNext() ; )
@@ -129,8 +131,8 @@ public class NeuralNetwork
 		    tempMatrix = new Matrix(hiddenNodes, hiddenNodes+1);
 		}
 		else tempMatrix = new Matrix(outputNodes, hiddenNodes+1);
-		for ( int i = 0; i < tempLL.getLast().row; i++ )
-		    for ( int j = 0; j < tempLL.getLast().column; j++ )
+		for ( int i = 0; i < tempMatrix.row; i++ )
+		    for ( int j = 0; j < tempMatrix.column; j++ )
 			tempMatrix.matrix[i][j] = tempLine.nextDouble();
 		tempLL.add(tempMatrix);
 	    }
@@ -162,7 +164,7 @@ public class NeuralNetwork
 		}
 		out.append("\n");
 	    }
-		
+            out.close();
 	}
 	catch(Exception e)
 	{
