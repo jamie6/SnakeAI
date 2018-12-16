@@ -175,14 +175,6 @@ public class SnakeContainer
                         food[i].setPosition( (int)point.x, (int)point.y, space);
                     }
                 }
-                else
-                {
-                    Point p = foodLocations.get(snake.getTotalFoodConsumed());
-                    for ( int i = 0; i < amountOfFood;i++)
-                    {
-                        food[i].setPosition( (int)p.x, (int)p.y, space);
-                    }
-                }
 	    }
 	}
     }
