@@ -1,4 +1,3 @@
-import java.util.Scanner;
 /**
  *
  * @author Jamie
@@ -12,37 +11,23 @@ public class SnakeAI
 
     public static void main(String[] args)
     {
-        Scanner scanner = new Scanner(System.in);
-        int choice = 0;
-        do
+        String[] options = {"Train Snake A.I.", "Test Snake A.I.", "Play Snake Game"};
+        String choice = (String)JOptionPane.showInputDialog(
+                            null, "Choose an option: ", "Snake A.I. start menu",
+                            JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+
+        if ( options[0].equals(choice) )
         {
-            System.out.println("1) Train Snake A.I.");
-            System.out.println("2) Test Snake A.I.");
-            System.out.println("3) Play Snake");
-            System.out.println("4) Exit");
-            choice = scanner.nextInt();
-            if ( choice == 1 )
-            {
-                System.out.println("train ai");
-                window = new TrainSnakeWindow();
-            }
-            else if ( choice == 2 )
-            {
-                System.out.println("test ai");
-                window = new TestSnakeWindow();
-            }
-            else if ( choice == 3 )
-            {
-                System.out.println("play");
-                window = new PlaySnakeWindow();
-            }
-            else if ( choice == 4 )
-            {
-                System.out.println("exit");
-                System.out.println("Good bye.");
-            }
-        } while ( choice < 1 || choice > 4 );
-        
+            window = new TrainSnakeWindow();
+        }
+        else if (options[1].equals(choice))
+        {
+            window = new TestSnakeWindow();
+        }
+        else if ( options[2].equals(choice))
+        {
+            window = new PlaySnakeWindow();
+        }
         if ( window != null ) mainLoop();
     }
     
