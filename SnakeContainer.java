@@ -166,6 +166,7 @@ public class SnakeContainer
 	    if ( snake.checkCollisionWithFood() )
 	    {
 		snake.addSegment();
+		if ( !humanInput ) snake.maxSteps += 100;
 
                 if ( isFoodRandom )
                 {
