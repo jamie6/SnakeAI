@@ -6,6 +6,8 @@ import java.awt.Point;
  */
 public class Snake
 {
+    static int hiddenNodes = 20, hiddenLayers = 1;
+    
     boolean humanInput = false;
     int fitness;
     
@@ -30,7 +32,7 @@ public class Snake
     public Snake(int xOffset, int yOffset, int gridSize, int n, int[][] space)
     {
         // changing output from 4 (north, south, east, west) to 3 (left, right, straight)
-	nn = new NeuralNetwork(16, 32, 3, 3); // input, hidden, output, layers
+	nn = new NeuralNetwork(16, hiddenNodes, 3, 2 + hiddenLayers); // input, hidden, output, layers
 	initializeSnake(xOffset, yOffset, gridSize, n, space);
     }
     
@@ -138,11 +140,10 @@ public class Snake
     {
 	int newDirection = nn.getOutput(processSpaceIntoInput()); // outputs values 0, 1, 2
         /*
-        0   go ahead
+        0   go straight
         1   go left
         2   go right
         */
-        //System.out.println("old Direction = " + direction);
         
         if ( newDirection == 0 ) return;
         
@@ -159,38 +160,37 @@ public class Snake
         }
         else if ( direction == SOUTH )
         {
-            if ( newDirection == 1 )
+            if ( newDirection == 1 ) // GO LEFT
             {
                 direction = EAST;
             }
-            else if ( newDirection == 2 )
+            else if ( newDirection == 2 ) // GO RIGHT
             {
                 direction = WEST;
             }
         }
         else if ( direction == EAST )
         {
-            if ( newDirection == 1 )
+            if ( newDirection == 1 ) // GO LEFT
             {
                 direction = NORTH;
             }
-            else if ( newDirection == 2 )
+            else if ( newDirection == 2 ) // GO RIGHT
             {
                 direction = SOUTH;
             }
         }
         else if ( direction == WEST )
         {
-            if ( newDirection == 1 )
+            if ( newDirection == 1 ) // GO LEFT
             {
                 direction = SOUTH;
             }
-            else if ( newDirection == 2 )
+            else if ( newDirection == 2 ) // GO RIGHT
             {
                 direction = NORTH;
             }
         }
-        //System.out.println("new Direction = " + direction);
     }
     
     public void setManhattanDistanceToFood(int manhattanDistanceToFood )
@@ -258,7 +258,6 @@ public class Snake
         int maxColumn = space[0].length-1;
         int currentRow;
         int currentColumn;
-        //boolean isFoodFound = false;
         
         for ( int i = 0; i < directions.length; i++ )
         {
@@ -273,12 +272,10 @@ public class Snake
                 else if ( space[currentRow+1][currentColumn+1] == 3 )
                 {
                     input[2*i+1] = 1; //Math.abs(startingRow-currentRow)+Math.abs(startingColumn-currentColumn);
-                    //isFoodFound = true;
                 }
                 currentRow += directions[i].x;
                 currentColumn += directions[i].y;
             }
-            //if ( !isFoodFound ) input[2*i+1] = maxRow+maxColumn;
         }
         
 	return input;
