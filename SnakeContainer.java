@@ -11,7 +11,7 @@ public class SnakeContainer
     boolean isFoodRandom = true;
             
     boolean humanInput;
-    int xOffset, yOffset, N, size;
+    private int xOffset, yOffset, N, size;
     int space[][]; // this is what the ai will see. 0 = empty space, 1 = occupied, 3 = food
     Food[] food;
     int amountOfFood=1;
@@ -23,67 +23,60 @@ public class SnakeContainer
     
     public SnakeContainer( int xOffset, int yOffset, int N, int size )
     {
-	humanInput = false;
-	this.xOffset = xOffset;
-	this.yOffset = yOffset;
-	this.N = N;
-	this.size = size;
-	rand = new java.util.Random();
-	space = new int[N+2][N+2]; 
+	initializeContainer(xOffset, yOffset, N, size);
 	newgame();
     }
     
     public SnakeContainer( int xOffset, int yOffset, int N, int size, NeuralNetwork nn )
     {
-	humanInput = false;
-	this.xOffset = xOffset;
-	this.yOffset = yOffset;
-	this.N = N;
-	this.size = size;
-	rand = new java.util.Random();
-	space = new int[N+2][N+2]; 
-	initializeSnake(nn);
-	newgame();
+	initializeContainer(xOffset, yOffset, N, size);
+	newgame(nn);
     }
     
     public SnakeContainer( int xOffset, int yOffset, int N, int size, LinkedList<Point> foodLocations )
     {
-	humanInput = false;
-	this.xOffset = xOffset;
-	this.yOffset = yOffset;
-	this.N = N;
-	this.size = size;
+	initializeContainer(xOffset, yOffset, N, size);
         this.foodLocations = foodLocations;
         isFoodRandom = false;
-	rand = new java.util.Random();
-	space = new int[N+2][N+2]; 
 	newgame();
     }
     
     public SnakeContainer( int xOffset, int yOffset, int N, int size, LinkedList<Point> foodLocations, NeuralNetwork nn )
     {
-	humanInput = false;
+	initializeContainer(xOffset, yOffset, N, size);
+        this.foodLocations = foodLocations;
+        isFoodRandom = false;
+        newgame(nn);
+    }
+    
+    private void initializeContainer(int xOffset, int yOffset, int N, int size) {
+        humanInput = false;
 	this.xOffset = xOffset;
 	this.yOffset = yOffset;
 	this.N = N;
 	this.size = size;
-        this.foodLocations = foodLocations;
-        isFoodRandom = false;
 	rand = new java.util.Random();
 	space = new int[N+2][N+2]; 
-	initializeSnake(nn);
-	newgame();
     }
     
     private void initializeSnake( NeuralNetwork nn )
     {
 	snake = new Snake(xOffset, yOffset, size, N, space, nn);
+        initializeSnake();
     }
     
-    public void newgame()
-    {
-	gameOver = false;
-	for ( int i = 0; i < N+2; i++ ) // initialize space values
+    private void initializeSnake() {
+        if ( snake == null ) snake = new Snake(xOffset, yOffset, size, N, space);
+	
+	for ( int i = 0; i < snake.getLength(); i++ )
+	{ // getSnakeBody returns a list of the snake segments so that you can reference each segments coordinates
+	    space[snake.getSnakeBody().get(i).getX()+1][snake.getSnakeBody().get(i).getY()+1] = 1;
+	}
+	size = N*snake.getSnakeSegmentSize();
+    }
+    
+    private void initializeSpace() {
+        for ( int i = 0; i < N+2; i++ ) // initialize space values
 	{
 	    for ( int j = 0; j < N+2; j++ )
 	    {
@@ -91,16 +84,12 @@ public class SnakeContainer
 		else space[i][j] = 0;
 	    }
 	}
-	food = new Food[amountOfFood];
+    }
+    
+    private void initializeFood() {
+        food = new Food[amountOfFood];
 	for ( int i = 0; i < amountOfFood; i++ )
 	    food[i] = new Food(xOffset, yOffset, size/N);
-	if ( snake == null ) snake = new Snake(xOffset, yOffset, size, N, space);
-	
-	for ( int i = 0; i < snake.getLength(); i++ )
-	{ // getSnakeBody returns a list of the snake segments so that you can reference each segments coordinates
-	    space[snake.getSnakeBody().get(i).getX()+1][snake.getSnakeBody().get(i).getY()+1] = 1;
-	}
-	size = N*snake.getSnakeSegmentSize();
         
         if ( isFoodRandom ) // place food in random spot
         {
@@ -110,6 +99,20 @@ public class SnakeContainer
                 food[i].setPosition( (int)point.x, (int)point.y, space);
             }
         }
+    }
+    
+    final public void newgame(NeuralNetwork nn) {
+        gameOver = false;
+        initializeSpace();
+        initializeSnake(nn);
+        initializeFood();
+    }
+    
+    final public void newgame() {
+        gameOver = false;
+        initializeSpace();
+        initializeSnake();
+        initializeFood();
     }
     
     private Point findWhereToPutFood()
@@ -166,7 +169,7 @@ public class SnakeContainer
 	    if ( snake.checkCollisionWithFood() )
 	    {
 		snake.addSegment();
-		if ( !humanInput ) snake.maxSteps += 100;
+                if ( !humanInput ) snake.maxSteps += 100;
 
                 if ( isFoodRandom )
                 {
@@ -176,6 +179,15 @@ public class SnakeContainer
                         food[i].setPosition( (int)point.x, (int)point.y, space);
                     }
                 }
+                /*
+                else // this may be causing food bug where food is placed on snake body
+                { // and becomes unreachable, therefore unedible preventing snake to grow
+                    Point p = foodLocations.get(snake.getTotalFoodConsumed());
+                    for ( int i = 0; i < amountOfFood;i++)
+                    {
+                        food[i].setPosition( (int)p.x, (int)p.y, space);
+                    }
+                } //*/
 	    }
 	}
     }
