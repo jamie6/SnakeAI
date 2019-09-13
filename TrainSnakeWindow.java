@@ -10,7 +10,6 @@ import java.awt.BorderLayout;
  */
 public class TrainSnakeWindow implements Window
 {
-
     LinkedList<SnakeContainer> goats = new LinkedList<>(); // a collection of goat snakes (greatest of all time)
     LinkedList<Point> foodLocations = new LinkedList<>(); // all the food in every container will have the same location
     JFrame frame;
@@ -108,7 +107,7 @@ public class TrainSnakeWindow implements Window
         columns = (int) Math.ceil(Math.sqrt(snakePopulation));// columns for snake container ui
         generation++;
 
-        if (generation > 1)
+        if (generation > 1) 
             geneticAlgorithm();
         else
         {
@@ -140,20 +139,22 @@ public class TrainSnakeWindow implements Window
         if (scjc != null)
         {
             int temp = scjc.getSelectedIndex();
-            scjc = new SnakeContainerJComponent(wholeContainerSize, sc, tst);
+            scjc.newgame(sc,tst);
             scjc.setSelectedIndex(temp);
             tst.highlightRow(temp);
         } else
+        {
             scjc = new SnakeContainerJComponent(wholeContainerSize, sc, tst);
+            frame.pack();
+            frame.setVisible(true);
+        }
 
         frame.add(scjc, BorderLayout.EAST);
-        frame.pack();
-        frame.setVisible(true);
     }
 
     public void geneticAlgorithm()
     {
-        // selection
+        // fitness && selection
         int[] x = new int[snakePopulation]; // store index of snakes to breed
         int[] y = new int[snakePopulation]; // store index of snakes to breed
         java.util.LinkedList<SnakeContainer> snakesByFitness = new java.util.LinkedList<>();
@@ -226,6 +227,4 @@ public class TrainSnakeWindow implements Window
         // assign children to next generation
         sc = children;
     }
-
-    
 }
