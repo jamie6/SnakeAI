@@ -53,6 +53,12 @@ public class SnakeContainerJComponent extends JComponent
         this.addMouseListener(new SCJCMouseListener());
     }
     
+    public void newgame(SnakeContainer sc[], TrainSnakeTable tst)
+    {
+        this.sc = sc;
+        this.tst = tst;
+    }
+    
     @Override
     public Dimension getSize() { return new Dimension(size,size); }
 
@@ -136,6 +142,16 @@ public class SnakeContainerJComponent extends JComponent
             {
                 if (bgs.get(i).contains(me.getX(), me.getY()))
                 {
+//                    if (selectedIndex == i)
+//                    {
+//                        if ( largeContainer ) // make small
+//                        {
+//                        }
+//                        else // make large
+//                        {
+//                        }   
+//                    } else
+                    //{
                     if (selectedIndex != -1)
                     {
                         Rectangle temp = bgs.get(selectedIndex);
