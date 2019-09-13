@@ -138,30 +138,33 @@ public class SnakeContainerJComponent extends JComponent
         @Override
         public void mouseClicked(MouseEvent me)
         {
-            for (int i = 0; i < bgs.size(); i++)
+            if ( tst != null )
             {
-                if (bgs.get(i).contains(me.getX(), me.getY()))
+                for (int i = 0; i < bgs.size(); i++)
                 {
-//                    if (selectedIndex == i)
-//                    {
-//                        if ( largeContainer ) // make small
-//                        {
-//                        }
-//                        else // make large
-//                        {
-//                        }   
-//                    } else
-                    //{
-                    if (selectedIndex != -1)
+                    if (bgs.get(i).contains(me.getX(), me.getY()))
                     {
-                        Rectangle temp = bgs.get(selectedIndex);
+    //                    if (selectedIndex == i)
+    //                    {
+    //                        if ( largeContainer ) // make small
+    //                        {
+    //                        }
+    //                        else // make large
+    //                        {
+    //                        }   
+    //                    } else
+                        //{
+                        if (selectedIndex != -1)
+                        {
+                            Rectangle temp = bgs.get(selectedIndex);
+                            selectedIndex = i;
+                            tst.highlightRow(selectedIndex);
+                            paintImmediately(temp);
+                        }
                         selectedIndex = i;
-                        tst.highlightRow(selectedIndex);
-                        paintImmediately(temp);
+                        paintImmediately(bgs.get(i));
+                        //}
                     }
-                    selectedIndex = i;
-                    paintImmediately(bgs.get(i));
-                    //}
                 }
             }
         }
@@ -175,19 +178,22 @@ public class SnakeContainerJComponent extends JComponent
         @Override
         public void mouseReleased(MouseEvent me)
         {
-            for (int i = 0; i < bgs.size(); i++)
+            if ( tst != null )
             {
-                if (bgs.get(i).contains(me.getX(), me.getY()))
+                for (int i = 0; i < bgs.size(); i++)
                 {
-                    if (selectedIndex != -1)
+                    if (bgs.get(i).contains(me.getX(), me.getY()))
                     {
-                        Rectangle temp = bgs.get(selectedIndex);
+                        if (selectedIndex != -1)
+                        {
+                            Rectangle temp = bgs.get(selectedIndex);
+                            selectedIndex = i;
+                            tst.highlightRow(selectedIndex);
+                            paintImmediately(temp);
+                        }
                         selectedIndex = i;
-                        tst.highlightRow(selectedIndex);
-                        paintImmediately(temp);
+                        paintImmediately(bgs.get(i));
                     }
-                    selectedIndex = i;
-                    paintImmediately(bgs.get(i));
                 }
             }
         }
