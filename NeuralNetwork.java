@@ -56,13 +56,13 @@ public class NeuralNetwork
 	
 	Matrix inputs, outputs, outputsWithBias;
 	inputs = weightLayers[0].matrixProduct(inputMatrixWithBias);
-	outputs = inputs.getActivationMatrix();
+	outputs = inputs.getActivationMatrix(Matrix.TANH);
 	outputsWithBias = outputs.getColumnMatrixWithBias();
 	
 	for ( int i = 1; i < weightLayers.length; i++ )
 	{
 	    inputs = weightLayers[i].matrixProduct(outputsWithBias);
-	    outputs = inputs.getActivationMatrix();
+	    outputs = inputs.getActivationMatrix(Matrix.TANH);
 	    outputsWithBias = outputs.getColumnMatrixWithBias();
 	}
 	
