@@ -141,7 +141,6 @@ public class TrainSnakeWindow implements Window
             int temp = scjc.getSelectedIndex();
             scjc.newgame(sc,tst);
             scjc.setSelectedIndex(temp);
-            tst.highlightRow(temp);
         } else
         {
             scjc = new SnakeContainerJComponent(wholeContainerSize, sc, tst);
