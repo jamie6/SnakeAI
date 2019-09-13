@@ -14,12 +14,10 @@ import javax.swing.JMenuItem;
  */
 public class WindowMenuBar
 {
-    JFrame frame;
-    JMenuBar getWindowMenuBar(JFrame frame)
+    static JMenuBar getWindowMenuBar(JFrame frame)
     {
-        this.frame = frame;
         JMenuBar jMenuBar = new JMenuBar();
-        JMenu fileJMenu = new JMenu("File");
+        JMenu fileJMenu = new JMenu("Session");
         jMenuBar.add(fileJMenu);
         JMenuItem newTrainingSessionJMI = new JMenuItem( new AbstractAction("New Training Session")
         {
