@@ -4,6 +4,7 @@
  */
 public class Matrix
 {
+    static final int SIGMOID = 0, TANH = 1;
     static java.util.Random rand = new java.util.Random();
     static int divideGaussianBy = 10; // this is used for random gaussian to get small numbers close to zero
     double matrix[][];
@@ -51,12 +52,31 @@ public class Matrix
 	return 1.0/(1.0+Math.pow(Math.E, -x));
     }
     
-    public Matrix getActivationMatrix()
+    // logistic function
+    public double tanh( double x )
+    {
+        return Math.tanh(x);
+    }
+    
+    public Matrix getActivationMatrix(int function)
     {
 	Matrix a = new Matrix(row, column);
+        
 	for ( int i = 0; i < row; i++ )
+        {
 	    for ( int j = 0; j < column; j++ )
-		a.matrix[i][j] = sigmoid( matrix[i][j] );
+            {
+                switch (function)
+                {
+                    case SIGMOID:
+                        a.matrix[i][j] = sigmoid( matrix[i][j] );
+                        break;
+                    case TANH:
+                        a.matrix[i][j] = tanh(matrix[i][j]);
+                        break;
+                }
+            }
+        }
 	return a;
     }
     
