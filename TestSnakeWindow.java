@@ -172,8 +172,7 @@ public class TestSnakeWindow implements Window
     
     public void initializeMenu()
     {
-        WindowMenuBar wmb = new WindowMenuBar();
-        frame.add(wmb.getWindowMenuBar(frame), BorderLayout.NORTH);
+        frame.add(WindowMenuBar.getWindowMenuBar(frame), BorderLayout.NORTH);
     }
 
     @Override
