@@ -1,12 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -130,64 +125,7 @@ public class TrainSnakeUI
         buttonsJPanel.add(setFPSJB);
 
         //************************ tool bar **************************
-        jMenuBar = new JMenuBar();
-        fileJMenu = new JMenu("File");
-        jMenuBar.add(fileJMenu);
-        newTrainingSessionJMI = new JMenuItem( new AbstractAction("New Training Session")
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                paused = true;
-                NewTrainingSessionPopup m = new NewTrainingSessionPopup();
-                m.addActionListener((ActionEvent ae) ->
-                {
-                    frame.dispose();
-                });
-            }
-        }   
-        );
-        fileJMenu.add(newTrainingSessionJMI);
-        
-        newTestingSessionJMI = new JMenuItem( new AbstractAction("New Testing Session")
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                paused = true;
-                frame.dispose();
-                try
-                {
-                    Runtime.getRuntime().exec("java SnakeAI 2");
-                    
-                } catch (IOException ex)
-                {
-                    Logger.getLogger(NewTrainingSessionPopup.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        );
-        fileJMenu.add(newTestingSessionJMI);
-        
-        newPlayingSessionJMI = new JMenuItem( new AbstractAction("New Play Session")
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                paused = true;
-                frame.dispose();
-                try
-                {
-                    Runtime.getRuntime().exec("java SnakeAI 3");
-                    
-                } catch (IOException ex)
-                {
-                    Logger.getLogger(NewTrainingSessionPopup.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        );
-        fileJMenu.add(newPlayingSessionJMI);
+        jMenuBar = WindowMenuBar.getWindowMenuBar(frame);
 
         //************************* frame ****************************
         frame.add(jMenuBar, BorderLayout.NORTH);
