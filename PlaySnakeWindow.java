@@ -120,8 +120,7 @@ public class PlaySnakeWindow implements Window
     
     public void initializeMenu()
     {
-        WindowMenuBar wmb = new WindowMenuBar();
-        frame.add(wmb.getWindowMenuBar(frame), BorderLayout.NORTH);
+        frame.add(WindowMenuBar.getWindowMenuBar(frame), BorderLayout.NORTH);
     }
     
     public void initializeJControls()
