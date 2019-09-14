@@ -27,7 +27,7 @@ public class WindowMenuBar
                 NewTrainingSessionPopup m = new NewTrainingSessionPopup();
                 m.addActionListener((ActionEvent ae) ->
                 {
-                    frame.dispose();
+                    //frame.dispose();
                 });
             }
         }   
@@ -39,7 +39,7 @@ public class WindowMenuBar
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                frame.dispose();
+                //frame.dispose();
                 try
                 {
                     Runtime.getRuntime().exec("java SnakeAI 2");
@@ -58,7 +58,7 @@ public class WindowMenuBar
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                frame.dispose();
+                //frame.dispose();
                 try
                 {
                     Runtime.getRuntime().exec("java SnakeAI 3");
